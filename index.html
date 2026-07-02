@@ -893,11 +893,20 @@ document.addEventListener("DOMContentLoaded", function() {
     zoomSnap: 0.5
   });
 
-  // Use CartoDB Positron for clean light base maps
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-    subdomains: 'abcd',
-    maxZoom: 20
+  // Layer controls
+  const satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles &copy; Esri',
+    maxZoom: 18
+  });
+  
+  const topo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+    maxZoom: 17,
+    attribution: 'Map data: &copy; OpenStreetMap | Style: &copy; OpenTopoMap'
+  }).addTo(map); // Default layer
+  
+  L.control.layers({
+    "Relieve Topográfico": topo,
+    "Satélite": satellite
   }).addTo(map);
 
   // Custom vintage div marker style
